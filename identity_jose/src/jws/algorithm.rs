@@ -45,6 +45,8 @@ pub enum JwsAlgorithm {
   NONE,
   /// EdDSA signature algorithms
   EdDSA,
+  /// IC canister signature
+  IcCs,
 }
 
 impl JwsAlgorithm {
@@ -65,6 +67,7 @@ impl JwsAlgorithm {
     Self::ES256K,
     Self::NONE,
     Self::EdDSA,
+    Self::IcCs,
   ];
 
   /// Returns the JWS algorithm as a `str` slice.
@@ -85,6 +88,7 @@ impl JwsAlgorithm {
       Self::ES256K => "ES256K",
       Self::NONE => "none",
       Self::EdDSA => "EdDSA",
+      Self::IcCs => "IcCs",
     }
   }
 }
@@ -109,6 +113,7 @@ impl FromStr for JwsAlgorithm {
       "ES256K" => Ok(Self::ES256K),
       "none" => Ok(Self::NONE),
       "EdDSA" => Ok(Self::EdDSA),
+      "IcCs" => Ok(Self::IcCs),
       _ => Err(Error::JwsAlgorithmParsingError),
     }
   }
