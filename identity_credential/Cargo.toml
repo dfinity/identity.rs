@@ -49,7 +49,7 @@ all-features = true
 rustdoc-args = ["--cfg", "docsrs"]
 
 [features]
-default = ["revocation-bitmap", "validator", "credential", "presentation", "domain-linkage-fetch", "sd-jwt"]
+default = ["revocation-bitmap", "validator", "credential", "presentation", "domain-linkage-fetch", "sd-jwt", "ic-wasm"]
 credential = []
 presentation = ["credential"]
 revocation-bitmap = ["dep:flate2", "dep:roaring"]
@@ -59,6 +59,7 @@ domain-linkage = ["validator"]
 domain-linkage-fetch = ["domain-linkage", "dep:reqwest", "dep:futures"]
 sd-jwt = ["credential", "validator", "dep:sd-jwt-payload"]
 jpt-bbs-plus = ["credential", "validator", "dep:zkryptium", "dep:json-proof-token"]
+ic-wasm = []
 
 [lints]
 workspace = true

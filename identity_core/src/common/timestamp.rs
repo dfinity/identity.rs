@@ -51,12 +51,23 @@ impl Timestamp {
   /// fractional seconds truncated.
   ///
   /// See the [`datetime` DID-core specification](https://www.w3.org/TR/did-core/#production).
-  #[cfg(all(target_arch = "wasm32", not(target_os = "wasi")))]
+  #[cfg(all(target_arch = "wasm32", not(target_os = "wasi"), not(feature = "ic-wasm")))]
   pub fn now_utc() -> Self {
     let milliseconds_since_unix_epoch: i64 = js_sys::Date::now() as i64;
     let seconds: i64 = milliseconds_since_unix_epoch / 1000;
     // expect is okay, we assume the current time is between 0AD and 9999AD
     Self::from_unix(seconds).expect("Timestamp failed to convert system datetime")
+  }
+  #[cfg(all(target_arch = "wasm32", not(target_os = "wasi"), feature = "ic-wasm"))]
+  pub fn now_utc() -> Self {
+    Self(truncate_fractional_seconds(
+      OffsetDateTime::from_unix_timestamp(
+        (ic_cdk::api::time() / 1_000_000_000)
+            .try_into()
+            .expect("Failed converting to u64"),
+      )
+          .expect("Wrong unix timestamp"),
+    ))
   }
 
   /// Returns the `Timestamp` as an [RFC 3339](https://tools.ietf.org/html/rfc3339) `String`.
