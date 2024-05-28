@@ -25,7 +25,7 @@ use crate::Result;
 use super::JwtPresentationOptions;
 
 #[derive(Serialize, Deserialize)]
-pub(crate) struct PresentationJwtClaims<'presentation, CRED, T = Object>
+pub struct PresentationJwtClaims<'presentation, CRED, T = Object>
 where
   T: ToOwned + Serialize,
   CRED: ToOwned + Serialize + Clone,
@@ -141,7 +141,7 @@ where
   CRED: ToOwned<Owned = CRED> + Serialize + DeserializeOwned + Clone,
   T: ToOwned<Owned = T> + Serialize + DeserializeOwned,
 {
-  pub(crate) fn try_into_presentation(self) -> Result<Presentation<CRED, T>> {
+  pub fn try_into_presentation(self) -> Result<Presentation<CRED, T>> {
     self.check_consistency()?;
     let Self {
       exp: _,

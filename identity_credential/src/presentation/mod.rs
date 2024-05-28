@@ -22,5 +22,8 @@ pub use self::presentation_builder::PresentationBuilder;
 #[cfg(feature = "jpt-bbs-plus")]
 pub use jwp_presentation_options::JwpPresentationOptions;
 
-#[cfg(feature = "validator")]
+#[cfg(all(feature = "validator", not(feature = "ic-wasm")))]
 pub(crate) use self::jwt_serialization::PresentationJwtClaims;
+
+#[cfg(feature = "ic-wasm")]
+pub use self::jwt_serialization::PresentationJwtClaims;
