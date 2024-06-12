@@ -63,10 +63,10 @@ impl Timestamp {
     Self(truncate_fractional_seconds(
       OffsetDateTime::from_unix_timestamp(
         (ic_cdk::api::time() / 1_000_000_000)
-            .try_into()
-            .expect("Failed converting to u64"),
+          .try_into()
+          .expect("Failed converting to u64"),
       )
-          .expect("Wrong unix timestamp"),
+      .expect("Wrong unix timestamp"),
     ))
   }
 
