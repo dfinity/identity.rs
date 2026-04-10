@@ -12,7 +12,7 @@ jobs:
   call-create-release-workflow:
     if: github.event.pull_request.merged == true
     # owner/repository of workflow has to be static, see https://github.community/t/env-variables-in-uses/17466
-    uses: iotaledger/identity.rs/.github/workflows/shared-release.yml@main
+    uses: iotaledger/identity.rs/.github/workflows/shared-release.yml@865f92b359b1bb92d8f4a8d638b0b5d60eefb80a # main
     with:
       changelog-config-path: ./bindings/wasm/.github_changelog_generator
       pre-release-tag-regex: ^wasm-v[0-9]+\.[0-9]+\.[0-9]+-(?<pre_release>\w+)\.\d+$
@@ -26,7 +26,7 @@ jobs:
     needs: call-create-release-workflow
     if: ${{ needs.call-create-release-workflow.outputs.is-release }}
     # owner/repository of workflow has to be static, see https://github.community/t/env-variables-in-uses/17466
-    uses: iotaledger/identity.rs/.github/workflows/shared-build-wasm.yml@main
+    uses: iotaledger/identity.rs/.github/workflows/shared-build-wasm.yml@865f92b359b1bb92d8f4a8d638b0b5d60eefb80a # main
     with:
       output-artifact-name: identity-wasm-bindings-build
 
@@ -36,7 +36,7 @@ jobs:
     needs: [call-create-release-workflow, build-wasm]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
       - name: Release to npm
         uses: './.github/actions/publish/publish-wasm'
         with:
